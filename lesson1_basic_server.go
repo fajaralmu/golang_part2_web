@@ -12,6 +12,7 @@ func oneSampleOne() {
 	http.HandleFunc("/basepage", basePage)
 }
 func oneSampleTwo() {
+	//with handler
 	theUser := &user{name: "Fajar"}
 
 	http.ListenAndServe(PORT, theUser)
