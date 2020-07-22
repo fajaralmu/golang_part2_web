@@ -41,7 +41,7 @@ func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	path := r.URL.Path[1:]
 	log.Println("PATH:" + path)
-	path = "../../" + path
+
 	data, err := ioutil.ReadFile(string(path))
 
 	if err == nil {
