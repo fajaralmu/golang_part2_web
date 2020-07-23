@@ -8,10 +8,8 @@ import (
 const PORT string = ":8080"
 
 const htmlTemplate = `
-<!DOCTYPE html>
-<html>
-	<head><title>{{.Title}}</title>
-	</head><body>
+{{template "header" .Title}}
+<body>
 	<p>
 	{{.Message}}
 	</p>
@@ -30,7 +28,19 @@ const htmlTemplate = `
 		<li>{{.}}</li> 
 		{{end}}
 	</ul>
-	</body>
+	{{template "footer"}}
+`
+
+const head = `
+<!DOCTYPE html>
+<html>
+	<head><title>{{.}}</title>
+	</head>
+`
+
+const foot = `
+<div>FOOTER</div>
+</body>
 </html>
 `
 
@@ -48,11 +58,17 @@ type pageObject struct {
 
 func oneFunc(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "text/html")
-	html, err := template.New("templateName").Parse(htmlTemplate)
-	if err == nil {
-		_pageObject := pageObject{3, "Page One", "Hello Go", []string{
-			"News #1", "News #2", "News #3",
-		}}
-		html.Execute(w, _pageObject)
-	}
+	//html, err := template.New("templateName").Parse(htmlTemplate)
+
+	html := template.New("myTemplate")
+	// if err == nil {
+	html.New("page").Parse(htmlTemplate)
+	html.New("header").Parse(head)
+	html.New("footer").Parse(foot)
+	_pageObject := pageObject{3, "Page One", "Hello Go", []string{
+		"News #1", "News #2", "News #3",
+	}}
+	html.Lookup("page").Execute(w, _pageObject)
+	// html.Execute(w, _pageObject)
+	// }
 }
