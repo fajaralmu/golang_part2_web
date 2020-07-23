@@ -7,11 +7,10 @@ import (
 	"strings"
 )
 
-const PORT string = ":8080"
-
-func main() {
+func main_handler() {
 	println("__lesson2Handler__")
-	http.Handle("/", new(myHandler))
+	http.Handle("/handler", new(myHandler))
+
 	http.ListenAndServe(PORT, nil)
 }
 
